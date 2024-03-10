@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import json
 import os 
+import random
 st.set_page_config(page_title="Kuberknowitall")
 
 hide_default_format = """

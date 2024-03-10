@@ -1,12 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Backend priceline lambda stack for communicating with bedrock
+Description: Backend lambda stack for communicating with bedrock
+
+Parameters:
+  KnowledgeBaseId:
+    Type: String
+    Description: The ID of the knowledge base.
+    Default: DCMMYAFTSF
 
 Resources:
-  PricelineSopsFunction:
+  KubeKbFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: priceline-lambda-bedrock-handler
+      FunctionName: kuberknowitall-bedrock-handler
       CodeUri: 
       Handler: handler.lambda_handler
       Runtime: python3.12
@@ -22,7 +28,7 @@ Resources:
               Action:
                 - bedrock:RetrieveAndGenerate
                 - bedrock:Retrieve
-              Resource: !Sub "arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:knowledge-base/CDSSWDYZ0F"
+              Resource: !Sub "arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:knowledge-base/${KnowledgeBaseId}"
         - Version: '2012-10-17'
           Statement:
             - Effect: Allow
@@ -32,7 +38,7 @@ Resources:
 
       Environment:
         Variables:
-          KNOWLEDGE_BASE_ID: DCMMYAFTSF
+          KNOWLEDGE_BASE_ID: !Ref KnowledgeBaseId
       FunctionUrlConfig:
         AuthType: NONE
         Cors:
@@ -42,8 +48,10 @@ Resources:
           AllowMethods: 
             - "*" 
           AllowOrigins: 
-            - "https://pricelineguru.streamlit.app" 
+            - "https://kuberknowitall.streamlit.app" 
           ExposeHeaders: 
             - "*" 
-          MaxAge: 300 
+          MaxAge: 300
+  
+
 
