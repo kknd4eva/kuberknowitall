@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Backend priceline lambda stack for communicating with bedrock
+
+Resources:
+  PricelineSopsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: priceline-lambda-bedrock-handler
+      CodeUri: 
+      Handler: handler.lambda_handler
+      Runtime: python3.12
+      Timeout: 25
+      MemorySize: 1024
+      Architectures:
+        - arm64
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:RetrieveAndGenerate
+                - bedrock:Retrieve
+              Resource: !Sub "arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:knowledge-base/CDSSWDYZ0F"
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource: !Sub "arn:aws:bedrock:${AWS::Region}::foundation-model/anthropic.claude-v2:1"
+
+      Environment:
+        Variables:
+          KNOWLEDGE_BASE_ID: DCMMYAFTSF
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors:
+          AllowCredentials: true 
+          AllowHeaders: 
+            - "*" 
+          AllowMethods: 
+            - "*" 
+          AllowOrigins: 
+            - "https://pricelineguru.streamlit.app" 
+          ExposeHeaders: 
+            - "*" 
+          MaxAge: 300 
+
