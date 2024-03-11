@@ -4,6 +4,8 @@ import json
 import os 
 import random
 import string
+import uuid
+
 st.set_page_config(page_title="Kuberknowitall")
 
 hide_default_format = """
