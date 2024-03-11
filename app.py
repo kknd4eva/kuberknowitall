@@ -23,9 +23,7 @@ st.sidebar.markdown("""
 st.sidebar.image("https://i.ibb.co/64WqhVV/kubernetes-logo.png", use_column_width=True)
 
 # Use a hardcoded session ID or generate one as needed
-sessionId = "None"
-#sessionId = ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
-#print(sessionId)
+sessionId = str(uuid.uuid4())
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -52,7 +50,7 @@ if prompt := st.chat_input("How can I help you?"):
     # Specify the function URL
     function_url = os.environ.get('FUNCTION_URL')
 
-    with st.spinner('Priceline Guru is thinking..shhhh'):  
+    with st.spinner('Kuberknowitall is thinking..shhhh'):  
         response = requests.post(function_url, json=payload)
 
     # Check if the request was successful
