@@ -48,16 +48,28 @@ def retrieveAndGenerate(input, kbId, model_arn, sessionId=None):
 
 
 def lambda_handler(event, context):
+    try:
+        body = json.loads(event['body'])
+        query = body["question"]
+        session_id = body["sessionid"]
 
-    body = json.loads(event['body'])
-    query = body["question"]
-    session_id = body["sessionid"]
+        # log all the incoming details
+        print(f"Query: {query}")
+        print(f"Session ID: {session_id}")
 
-    response = retrieveAndGenerate(query, kb_id, model_arn, session_id)
-    generated_text = response['output']['text']
-    print(generated_text)
 
-    return {
-        'statusCode': 200,
-        'body': {"question": query.strip(), "answer": generated_text.strip()}
-    }
+        response = retrieveAndGenerate(query, kb_id, model_arn, session_id)
+        print(response)
+        generated_text = response['output']['text']
+        print(generated_text)
+
+        return {
+            'statusCode': 200,
+            'body': {"question": query.strip(), "answer": generated_text.strip()}
+        }
+    except Exception as e:
+        print(e)
+        return {
+            'statusCode': 400,
+            'body': json.dumps(str(e))
+        }

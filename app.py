@@ -23,7 +23,7 @@ st.sidebar.markdown("""
 st.sidebar.image("https://i.ibb.co/64WqhVV/kubernetes-logo.png", use_column_width=True)
 
 # Use a hardcoded session ID or generate one as needed
-sessionId = None
+sessionId = "None"
 #sessionId = ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
 #print(sessionId)
 
