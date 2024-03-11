@@ -1,6 +1,7 @@
 import os
 import boto3
 import json
+import uuid
 
 boto3_session = boto3.session.Session()
 region = boto3_session.region_name
