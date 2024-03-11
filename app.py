@@ -25,7 +25,7 @@ st.sidebar.markdown("""
 st.sidebar.image("https://i.ibb.co/64WqhVV/kubernetes-logo.png", use_column_width=True)
 
 # Use a hardcoded session ID or generate one as needed
-sessionId = str(uuid.uuid4())
+sessionId = "None"
 
 # Initialize chat history
 if "messages" not in st.session_state:
